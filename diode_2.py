@@ -26,22 +26,21 @@ for i in range(3):
     totale_lijst.append(meting_lijst)
 
 mean_list = []
-
+std_list = []
 for i in range(1024):
     mean_per_value = []
     for j in range(len(totale_lijst)):
         mean_per_value.append(totale_lijst[j][i])
         
     mean_list.append(np.mean(mean_per_value))
-
-# print(mean_list)
+    std_list.append(np.std(mean_per_value))
 
 x_as = []
 for i in range(0,1024):
     x_as.append(i)
 
-print(len(x_as))
-print(x_as)
+device.query(f"OUT:CH0 {0}")
 
-plt.plot(x_as, mean_list)
+plt.plot(x_as,std_list)
 plt.show()
+

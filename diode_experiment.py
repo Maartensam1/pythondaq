@@ -27,13 +27,9 @@ for i in range(0,1024):
     current = voltage_resistor/220
     current_list.append(current)
 
-    print(voltage_beide, voltage_resistor)
+    # print(voltage_beide, voltage_resistor)
 
     # print(f"de spanning over beide is:{voltage_beide:.2f} V")
     # print(f"de spanning resistor is:{voltage_resistor:.2f} V")
 
     device.query(f"OUT:CH0 {0}")
-
-
-plt.plot(voltage_led_list, current_list)
-plt.show()
