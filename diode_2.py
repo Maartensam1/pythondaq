@@ -31,7 +31,6 @@ for i in range(3):
     totale_lijst_voltage.append(meting_lijst)
     totale_lijst_current.append(current_list)
 
-
 mean_list_voltage = []
 std_list_voltage = []
 mean_list_current = []
@@ -47,12 +46,6 @@ for i in range(1024):
     std_list_voltage.append(np.std(mean_per_value_voltage))
     mean_list_current.append(np.mean(mean_per_value_current))
     std_list_current.append(np.std(mean_per_value_current))
-
-
-x_as = []
-for i in range(0,1024):
-    x_as.append(i)
-
 
 current_list = []
 voltage_beide_list = []
@@ -73,11 +66,9 @@ for i in range(0,1024):
     current = voltage_resistor/220
     current_list.append(current)
 
-
-
 device.query(f"OUT:CH0 {0}")
 
-plt.errorbar(mean_list_voltage, mean_list_current, yerr=std_list_current, xerr=std_list_voltage, fmt='-', ecolor='red', markersize=2, capsize=1)
+plt.errorbar(mean_list_voltage, mean_list_current, yerr=std_list_current, xerr=std_list_voltage, fmt='o', ecolor='red', markersize=2, capsize=1)
 plt.xlabel("Spanning (V)")
 plt.ylabel("Stroom (A)")
 plt.show()
