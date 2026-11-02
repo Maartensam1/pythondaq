@@ -1,8 +1,9 @@
 import pyvisa
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 
-rm = pyvisa.ResourceManager("@py")
+rm =pyvisa.ResourceManager("@py")
 ports = rm.list_resources()
 
 device = rm.open_resource(
@@ -91,6 +92,13 @@ for i in range(0,1024):
     current_list.append(current)
 
 device.query(f"OUT:CH0 {0}")
+
+# metingen opslaan in csv-bestand
+with open("metingen.csv", "w", newline="") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["U (V)", "I (A)", "err_U (V)", "err_I (A)"])
+    for u, i, err_u, err_i in zip(mean_list_voltage, mean_list_current, std_list_voltage, std_list_current):
+        writer.writerow([u, i, err_u, err_i])
 
 # plotten
 plt.errorbar(mean_list_voltage, mean_list_current, yerr=std_list_current, xerr=std_list_voltage, fmt='o', ecolor='red', markersize=2, capsize=1)
