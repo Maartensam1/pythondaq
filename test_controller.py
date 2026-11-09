@@ -6,7 +6,7 @@ def list_resources():
     return rm, ports
 
 class ArduinoVISADevice:
-    def __init__(self, port):
+    def __init__(self):
         rm, ports = list_resources()
         self.device = rm.open_resource("ASRL/dev/cu.usbmodem1101::INSTR", read_termination="\r\n", write_termination="\n")
         
@@ -14,18 +14,17 @@ class ArduinoVISADevice:
         identification = self.device.query("*IDN?")
         return identification
 
-    def set_output_value(self):
-        self.device.query(f"OUT:CH0 {828}")
+    def set_output_value(self, value):
+        self.device.query(f"OUT:CH0 {value}")
 
     def get_output_value(self):
         waarde_CH0 = self.device.query(f"OUT:CH0?")
         print(waarde_CH0)
 
-    def get_input_value(self):
-        self.spanning_CH1 = self.device.query(f"MEAS:CH1?")
-        spanning_CH2 = self.device.query(f"MEAS:CH2?")
-        print(self.spanning_CH1)
-        print(spanning_CH2)
+    def get_input_value(self,CH):
+        self.spanning_CH = self.device.query(f"MEAS:{f"CH{CH}"}?")
+        print(self.spanning_CH)
+        return self.spanning_CH
 
     def get_input_voltage(self):
         self.get_input_value()
@@ -37,9 +36,9 @@ class ArduinoVISADevice:
         self.device.query(f"OUT:CH0 {value}")
 
 
-device = ArduinoVISADevice(port="ASRL3::INSTR")
-# device.set_output_value()
-# device.get_output_value()
-# device.get_input_value()
-# device.get_input_voltage()
-device.set_output_voltage(0)
+arduino = ArduinoVISADevice(port="ASRL3::INSTR")
+# arduino.set_output_value(828)
+# arduino.get_output_value()
+# arduino.get_input_value(1)
+# arduino.get_input_voltage()
+arduino.set_output_voltage(0)
