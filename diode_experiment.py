@@ -13,7 +13,7 @@ for i in range(3):
     meting_lijst = []
     current_list = []
 
-    for voltage in np.arange(0,3.4,0.01):
+    for voltage in np.arange(0,3.4,0.1):
         arduino.set_output_voltage(voltage)
 
         voltage_beide = arduino.get_input_voltage(1)
