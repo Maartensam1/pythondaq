@@ -1,11 +1,17 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import csv
-from arduino_device import list_resources, ArduinoVISADevice
+from arduino_device import list_resources
 from diode_experiment import DiodeExperiment
 
 rm, ports = list_resources()
-arduino = ArduinoVISADevice("ASRL/dev/cu.usbmodem1101::INSTR")
+print(ports)
+port = "ASRL/dev/cu.usbmodem1101::INSTR"
+experiment = DiodeExperiment(port)
+mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(0, 3.4, 3)
+
+# metingen printen
+for u, i, err_u, err_i in zip(mean_list_voltage, mean_list_current, std_list_voltage, std_list_current):
+    print(f"average voltage: {u} +/- {err_u} V  average current: {i} +/- {err_i} A")
 
 # metingen opslaan in csv-bestand
 with open("metingen.csv", "w", newline="") as csvfile:
