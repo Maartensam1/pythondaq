@@ -11,7 +11,7 @@ from diode_experiment import DiodeExperiment
 
 rm, ports = list_resources()
 print(ports)
-port = "ASRL/dev/cu.usbmodem1101::INSTR"
+port = "ASRL/dev/cu.usbmodem101::INSTR"
 experiment = DiodeExperiment(port)
 mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(0, 3.4, 3)
 
