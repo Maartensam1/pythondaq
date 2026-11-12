@@ -1,3 +1,9 @@
+"""View: voert de diodemeting uit en laat de resultaten zien.
+
+Dit script start een scan met DiodeExperiment, print de metingen, slaat ze
+op in metingen.csv en plot de I,U-karakteristiek van de LED.
+"""
+
 import matplotlib.pyplot as plt
 import csv
 from arduino_device import list_resources

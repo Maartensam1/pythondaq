@@ -1,3 +1,9 @@
+"""Meet de drift van de spanning over de LED in de tijd.
+
+Zet de maximale spanning op kanaal 0, meet herhaaldelijk de spanning over
+de LED en plot de metingen tegen het meetnummer.
+"""
+
 import pyvisa
 import matplotlib.pyplot as plt
 import numpy as np

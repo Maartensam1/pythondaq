@@ -1,11 +1,41 @@
+"""Model voor het meten van de I,U-karakteristiek van een LED.
+
+Deze module gebruikt de controller (ArduinoVISADevice) om een spanningsscan
+uit te voeren en berekent gemiddelden en standaardafwijkingen.
+"""
+
 import numpy as np
 from arduino_device import ArduinoVISADevice
 
 class DiodeExperiment:
+    """Experiment om de stroom en spanning over een LED te meten.
+
+    Attributes:
+        arduino (ArduinoVISADevice): De controller waarmee gemeten wordt.
+    """
+
     def __init__(self, port):
+        """Maakt het experiment aan en verbindt met de Arduino.
+
+        Args:
+            port (str): Naam van de VISA-poort waarop de Arduino zit.
+        """
         self.arduino = ArduinoVISADevice(port)
 
     def scan(self, start, stop, herhalingen):
+        """Voert een spanningsscan uit en meet de spanning over en stroom door de LED.
+
+        Args:
+            start (float): Beginspanning van de scan in volt.
+            stop (float): Eindspanning van de scan in volt (niet inbegrepen).
+            herhalingen (int): Aantal keer dat de scan herhaald wordt.
+
+        Returns:
+            tuple: Vier lijsten (mean_list_voltage, mean_list_current,
+            std_list_voltage, std_list_current) met de gemiddelde spanning
+            over de LED (V), de gemiddelde stroom (A) en de bijbehorende
+            standaardafwijkingen.
+        """
         # Raket methode
         totale_lijst_voltage = []
         totale_lijst_current = []
