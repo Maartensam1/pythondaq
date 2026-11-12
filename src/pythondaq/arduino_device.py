@@ -32,7 +32,6 @@ class ArduinoVISADevice:
         Args:
             port (str): Naam van de VISA-poort.
         """
-        rm, ports = list_resources()
         self.device = rm.open_resource(port, read_termination="\r\n", write_termination="\n")
         
     def get_identification(self):
