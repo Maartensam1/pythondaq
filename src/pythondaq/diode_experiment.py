@@ -5,7 +5,7 @@ uit te voeren en berekent gemiddelden en standaardafwijkingen.
 """
 
 import numpy as np
-from arduino_device import ArduinoVISADevice
+from pythondaq.arduino_device import ArduinoVISADevice
 
 class DiodeExperiment:
     """Experiment om de stroom en spanning over een LED te meten.

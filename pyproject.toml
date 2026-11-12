@@ -18,6 +18,9 @@ dependencies = [
 
 [project.scripts]
 pythondaq = "pythondaq:main"
+easystat = "easystat:main"
+commando = "pythondaq.run_experiment:main"
+
 
 [build-system]
 requires = ["uv_build>=0.11.17,<0.12.0"]
