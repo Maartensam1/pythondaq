@@ -43,7 +43,7 @@ class DiodeExperiment:
             meting_lijst = []
             current_list = []
 
-            for voltage in np.arange(start,stop,0.1):
+            for voltage in np.arange(start,stop,0.01):
                 self.arduino.set_output_voltage(voltage)
 
                 voltage_beide = self.arduino.get_input_voltage(1)

@@ -32,6 +32,7 @@ class ArduinoVISADevice:
         Args:
             port (str): Naam van de VISA-poort.
         """
+        rm =pyvisa.ResourceManager("@py")
         self.device = rm.open_resource(port, read_termination="\r\n", write_termination="\n")
         
     def get_identification(self):
@@ -58,7 +59,7 @@ class ArduinoVISADevice:
             str: De huidige (0-1023) van kanaal 0.
         """
         waarde_CH0 = self.device.query(f"OUT:CH0?")
-        print(waarde_CH0)
+        # print(waarde_CH0)
         return waarde_CH0
 
     def get_input_value(self,CH):
@@ -71,7 +72,7 @@ class ArduinoVISADevice:
             str: De gemeten ADC-waarde (0-1023).
         """
         self.spanning_CH = self.device.query(f"MEAS:{f"CH{CH}"}?")
-        print(self.spanning_CH)
+        # print(self.spanning_CH)
         return self.spanning_CH
 
     def get_input_voltage(self, CH):
@@ -87,7 +88,7 @@ class ArduinoVISADevice:
         """
         self.get_input_value(CH)
         spanning_CH_V = float(self.spanning_CH) * (3.3/1023)
-        print(f"de spanning in Volt over CH{CH} is : {spanning_CH_V}")
+        # print(f"de spanning in Volt over CH{CH} is : {spanning_CH_V}")
         return spanning_CH_V
 
     def set_output_voltage(self, voltage):

@@ -8,6 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "click>=8.5.1",
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "pyserial>=3.5",
@@ -20,6 +21,7 @@ dependencies = [
 pythondaq = "pythondaq:main"
 easystat = "easystat:main"
 commando = "pythondaq.run_experiment:main"
+diode = "pythondaq.cli:cli"
 
 
 [build-system]
