@@ -16,18 +16,18 @@ def main():
     experiment = DiodeExperiment(port)
     mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(0, 3.4, 3, 0.01)
 
-    # metingen printen
+    # Printing the measurements.
     for u, i, err_u, err_i in zip(mean_list_voltage, mean_list_current, std_list_voltage, std_list_current):
         print(f"average voltage: {u} +/- {err_u} V  average current: {i} +/- {err_i} A")
 
-    # metingen opslaan in csv-bestand
+    # Saving the measurements in a .csv file.
     with open("metingen.csv", "w", newline="") as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(["U (V)", "I (A)", "err_U (V)", "err_I (A)"])
         for u, i, err_u, err_i in zip(mean_list_voltage, mean_list_current, std_list_voltage, std_list_current):
             writer.writerow([u, i, err_u, err_i])
 
-    # plotten
+    # Plotting the data.
     plt.errorbar(mean_list_voltage, mean_list_current, yerr=std_list_current, xerr=std_list_voltage, fmt='o', ecolor='red', markersize=2, capsize=1)
     plt.xlabel("Spanning (V)")
     plt.ylabel("Stroom (A)")
