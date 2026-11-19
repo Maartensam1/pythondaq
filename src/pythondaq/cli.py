@@ -16,7 +16,7 @@ def cli():
 
 @cli.command("list")
 def list():
-    """ shows the connected devices """
+    """ shows the ports of the connected devices """
     rm, ports = list_resources()
     print(f"The connected ports are:")
     print(ports)
@@ -28,7 +28,8 @@ def list():
     help = "put the port you want to identify here"
 )
 def info(port):
-    """ shows the identificationstring of the port """
+    """ shows the identificationstring of the port.
+    A correct arduino is connect when the following message shows in the terminal: "Arduino VISA firmware v1.2.0" """
     device = ArduinoVISADevice(port)
     identification = device.get_identification()
     print("The identification string of that port is:")
@@ -65,10 +66,16 @@ def info(port):
     default = None,
     help = "use this if you want the data to be stored in a .csv file for the input choose the name you want your file to have"
 )
-def scan(range, repitions, stepsize, filename):
+@click.option(
+    "-a",
+    "--arduino",
+    required = True,
+    help = "choose the port connected to the arduino that you want to use for the measurements"
+)
+def scan(range, repitions, stepsize, filename, arduino):
     """measures the I,U characteristics of the diode"""
     start_range, end_range = range
-    port = "ASRL/dev/cu.usbmodem1101::INSTR"
+    port = arduino
     experiment = DiodeExperiment(port)
     mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(start_range, end_range, repitions, stepsize)
 
