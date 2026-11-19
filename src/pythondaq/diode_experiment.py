@@ -22,7 +22,7 @@ class DiodeExperiment:
         """
         self.arduino = ArduinoVISADevice(port)
 
-    def scan(self, start, stop, herhalingen):
+    def scan(self, start, stop, herhalingen, stepsize):
         """Voert een spanningsscan uit en meet de spanning over en stroom door de LED.
 
         Args:
@@ -43,7 +43,7 @@ class DiodeExperiment:
             meting_lijst = []
             current_list = []
 
-            for voltage in np.arange(start,stop,0.01):
+            for voltage in np.arange(start,stop,stepsize):
                 self.arduino.set_output_voltage(voltage)
 
                 voltage_beide = self.arduino.get_input_voltage(1)
