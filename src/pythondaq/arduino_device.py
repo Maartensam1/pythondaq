@@ -23,7 +23,7 @@ class ArduinoVISADevice:
     uitlezen op de inputkanalen.
 
     Attributes:
-        device: de geopende arduino pport waarmee gecommuniceerd wordt.
+        device: de geopende arduino poort waarmee gecommuniceerd wordt.
     """
 
     def __init__(self, port):

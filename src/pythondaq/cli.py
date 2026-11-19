@@ -1,7 +1,12 @@
+"""
+In this file the CLI is build. It uses user inputs to run the diode experiment. 
+It connects to arduino_device.py and diode_experiment.py
+""" 
+
 import click
 import matplotlib.pyplot as plt
 import csv
-from pythondaq.arduino_device import list_resources
+from pythondaq.arduino_device import list_resources, ArduinoVISADevice
 from pythondaq.diode_experiment import DiodeExperiment
 
 @click.group()
@@ -12,7 +17,23 @@ def cli():
 @cli.command("list")
 def list():
     """ shows the connected devices """
-    print("Work in progress, list devices")
+    rm, ports = list_resources()
+    print(f"The connected ports are:")
+    print(ports)
+
+@cli.command("info")
+@click.option(
+    "-p",
+    "--port",
+    help = "put the port you want to identify here"
+)
+def info(port):
+    """ shows the identificationstring of the port """
+    device = ArduinoVISADevice(port)
+    identification = device.get_identification()
+    print("The identification string of that port is:")
+    print(identification)
+
 
 @cli.command("scan")
 @click.option(
@@ -45,10 +66,8 @@ def list():
     help = "use this if you want the data to be stored in a .csv file for the input choose the name you want your file to have"
 )
 def scan(range, repitions, stepsize, filename):
-    start_range, end_range = range
     """measures the I,U characteristics of the diode"""
-    rm, ports = list_resources()
-    print(ports)
+    start_range, end_range = range
     port = "ASRL/dev/cu.usbmodem1101::INSTR"
     experiment = DiodeExperiment(port)
     mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(start_range, end_range, repitions, stepsize)
