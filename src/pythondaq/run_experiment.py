@@ -14,7 +14,7 @@ def main():
     print(ports)
     port = "ASRL/dev/cu.usbmodem1101::INSTR"
     experiment = DiodeExperiment(port)
-    mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(0, 3.4, 3)
+    mean_list_voltage, mean_list_current, std_list_voltage, std_list_current = experiment.scan(0, 3.4, 3, 0.01)
 
     # metingen printen
     for u, i, err_u, err_i in zip(mean_list_voltage, mean_list_current, std_list_voltage, std_list_current):
@@ -36,5 +36,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# test commit
