@@ -43,28 +43,28 @@ def info(port):
     type = click.FloatRange(0, 3.3),
     nargs = 2,
     default = (0, 3.3),
-    help = "input a voltage range, two values: <start> <end>"
+    help = "input a voltage range, two values: <start> <end>. This can be a float"
 )
 @click.option(
     "-n",
     "--repitions",
     type = int,
     default = 3,
-    help = "input the number of runs you would like the measurements to do"
+    help = "input the number of runs you would like the measurements to do. This has to be an integer"
 )
 @click.option(
     "-s",
     "--stepsize",
     type = float,
     default = 0.01,
-    help = "input the size of step you want to use for the measurements"
+    help = "input the size of step you want to use for the measurements. This can be a float"
 )
 @click.option(
     "-o",
     "--output",
     "filename",
     default = None,
-    help = "use this if you want the data to be stored in a .csv file for the input choose the name you want your file to have"
+    help = "use this if you want the data to be stored in a .csv file. For the input choose the name you want your file to have"
 )
 @click.option(
     "-a",
@@ -72,7 +72,19 @@ def info(port):
     required = True,
     help = "choose the port connected to the arduino that you want to use for the measurements"
 )
-def scan(range, repitions, stepsize, filename, arduino):
+@click.option(
+    "-g / -ng",
+    "--graph / --no_graph",
+    default = True,
+    help = "choose wether you want to generate a graph of the measured data"
+)
+@click.option(
+    "-f",
+    "--figure",
+    default = None,
+    help = "use this if you want the figure to be stored in a .png file. For the input choose the name you want your file to have"
+)
+def scan(range, repitions, stepsize, filename, arduino, graph, figure):
     """measures the I,U characteristics of the diode"""
     start_range, end_range = range
     port = arduino
@@ -92,11 +104,15 @@ def scan(range, repitions, stepsize, filename, arduino):
                 writer.writerow([u, i, err_u, err_i])
 
     # plotten
+  
     plt.errorbar(mean_list_voltage, mean_list_current, yerr=std_list_current, xerr=std_list_voltage, fmt='o', ecolor='red', markersize=2, capsize=1)
     plt.xlabel("Spanning (V)")
     plt.ylabel("Stroom (A)")
-    plt.title("I,U-karakteristiek van een LED")
-    plt.show()
+    plt.title("IU-karakteristiek van een LED")
+    if figure:
+        plt.savefig(f"{figure}.png")
+    if graph:
+        plt.show()
 
 if __name__ == "__main__":
     cli()
